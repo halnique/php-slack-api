@@ -1,0 +1,33 @@
+{
+    "name": "halnique/php-slack-api",
+    "description": "Simple PHP wrapper interfaces for Slack APIs.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "halnique",
+            "email": "shunsuke4dev@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Halnique\\SlackApi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HalniqueTest\\SlackApi\\": "tests/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "7.1.3"
+        }
+    }
+}
