@@ -10,19 +10,22 @@
         }
     ],
     "require": {
-        "php": "^7.1.3"
+        "php": "^7.1.3",
+        "ext-json": "^1.6",
+        "guzzlehttp/guzzle": "^6.3",
+        "psr/log": "^1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5"
     },
     "autoload": {
         "psr-4": {
-            "Halnique\\SlackApi\\": "src/"
+            "Halnique\\Slack\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "HalniqueTest\\SlackApi\\": "tests/"
+            "HalniqueTest\\Slack\\": "tests/"
         }
     },
     "config": {
