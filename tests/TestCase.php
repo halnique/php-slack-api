@@ -7,7 +7,7 @@ use Dotenv\Dotenv;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         $dotEnv = Dotenv::create(__DIR__ . '/../', '.env.testing');
