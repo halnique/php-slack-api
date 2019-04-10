@@ -14,11 +14,9 @@ class ErrorTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \DomainException
-     */
     public function test__construct_exception()
     {
+        $this->expectException(\DomainException::class);
         new Error(\Faker\Factory::create()->word);
     }
 

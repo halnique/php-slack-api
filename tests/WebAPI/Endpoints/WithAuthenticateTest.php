@@ -18,7 +18,6 @@ class WithAuthenticateTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
      * @throws \ReflectionException
      */
     public function testTokenException()
@@ -26,6 +25,7 @@ class WithAuthenticateTest extends TestCase
         putenv('SLACK_API_ACCESS_TOKEN=');
         /** @var WithAuthenticate $withAuthenticate */
         $withAuthenticate = $this->getMockForTrait(WithAuthenticate::class);
+        $this->expectException(\RuntimeException::class);
         $withAuthenticate->token();
     }
 }
