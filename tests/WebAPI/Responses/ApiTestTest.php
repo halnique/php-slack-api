@@ -11,7 +11,7 @@ class ApiTestTest extends TestCase
 
     private static $value;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         $faker = \Faker\Factory::create();

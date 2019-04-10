@@ -10,7 +10,7 @@ class UserProfileTest extends TestCase
 {
     private static $attributes = [];
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 

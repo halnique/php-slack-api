@@ -15,7 +15,7 @@ class UsersLookupByEmailTest extends TestCase
 
     private static $email;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 

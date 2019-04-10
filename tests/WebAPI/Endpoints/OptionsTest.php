@@ -12,7 +12,7 @@ class OptionsTest extends TestCase
 
     private static $token;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
