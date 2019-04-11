@@ -4,8 +4,8 @@ namespace Halnique\Slack\WebAPI\Responses;
 
 
 /**
- * @property-read bool|null $ok
- * @property-read Error|null $error
+ * @property-read bool|null ok
+ * @property-read Error|null error
  */
 class Response implements \JsonSerializable
 {

@@ -4,7 +4,7 @@ namespace Halnique\Slack\WebAPI\Responses;
 
 
 /**
- * @property-read User|null $user
+ * @property-read User|null user
  */
 class UsersLookupByEmail extends Response
 {

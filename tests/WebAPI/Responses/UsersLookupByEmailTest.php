@@ -8,9 +8,23 @@ use HalniqueTest\Slack\TestCase;
 
 class UsersLookupByEmailTest extends TestCase
 {
+    private static $attributes = [];
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        $faker = \Faker\Factory::create();
+        self::$attributes = [
+            'ok' => true,
+            'error' => $faker->word,
+            'user' => [],
+        ];
+    }
+
     public function test__construct()
     {
-        $usersLookupByEmail = new UsersLookupByEmail(['ok' => true, 'user' => []]);
+        $usersLookupByEmail = new UsersLookupByEmail(self::$attributes);
         $this->assertInstanceOf(UsersLookupByEmail::class, $usersLookupByEmail);
         return $usersLookupByEmail;
     }

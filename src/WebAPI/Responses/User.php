@@ -4,27 +4,27 @@ namespace Halnique\Slack\WebAPI\Responses;
 
 
 /**
- * @property-read string|null $id
- * @property-read string|null $teamId
- * @property-read string|null $name
- * @property-read bool|null $deleted
- * @property-read string|null $color
- * @property-read string|null $realName
- * @property-read string|null $tz
- * @property-read string|null $tzLabel
- * @property-read int|null $tzOffset
- * @property-read UserProfile|null $profile
- * @property-read bool|null $isAdmin
- * @property-read bool|null $isOwner
- * @property-read bool|null $isPrimaryOwner
- * @property-read bool|null $isRestricted
- * @property-read bool|null $isUltraRestricted
- * @property-read bool|null $isBot
- * @property-read int|null $updated
- * @property-read bool|null $isAppUser
- * @property-read bool|null $has2fa
- * @property-read string|null $locale
- * @property-read string|null $presence
+ * @property-read string|null id
+ * @property-read string|null teamId
+ * @property-read string|null name
+ * @property-read bool|null deleted
+ * @property-read string|null color
+ * @property-read string|null realName
+ * @property-read string|null tz
+ * @property-read string|null tzLabel
+ * @property-read int|null tzOffset
+ * @property-read UserProfile|null profile
+ * @property-read bool|null isAdmin
+ * @property-read bool|null isOwner
+ * @property-read bool|null isPrimaryOwner
+ * @property-read bool|null isRestricted
+ * @property-read bool|null isUltraRestricted
+ * @property-read bool|null isBot
+ * @property-read int|null updated
+ * @property-read bool|null isAppUser
+ * @property-read bool|null has2fa
+ * @property-read string|null locale
+ * @property-read string|null presence
  */
 final class User implements \JsonSerializable
 {
