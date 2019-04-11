@@ -70,32 +70,9 @@ class UserProfileTest extends TestCase
      */
     public function testJsonSerialize(UserProfile $userProfile)
     {
-        $this->assertArrayHasKey('real_name', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('display_name', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('avatar_hash', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('real_name_normalized', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('display_name_normalized', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('image_24', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('image_32', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('image_48', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('image_72', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('image_192', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('always_active', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('email', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('fields', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('first_name', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('guest_channels', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('image_512', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('image_original', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('last_name', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('phone', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('skype', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('status_emoji', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('status_expiration', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('status_text', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('status_text_canonical', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('team', $userProfile->jsonSerialize());
-        $this->assertArrayHasKey('title', $userProfile->jsonSerialize());
+        foreach (self::$attributes as $key => $value) {
+            $this->assertArrayHasKey($key, $userProfile->jsonSerialize());
+        }
     }
 
     /**

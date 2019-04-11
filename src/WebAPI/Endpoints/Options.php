@@ -11,13 +11,15 @@ final class Options implements ValueObject
 
     public function __construct(HttpMethod $httpMethod, array $params = [], string $token = '')
     {
+        $headers = [];
+
         if ($httpMethod->isUpdate()) {
             $this->options = $params;
+            $headers['Content-Type'] = 'application/json';
         }
 
-        $headers = [];
         if ($token) {
-            $headers['Authorization: Bearer'] = $token;
+            $headers['Authorization'] = "Bearer {$token}";
         }
         $this->options['headers'] = $headers;
     }

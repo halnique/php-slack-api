@@ -65,27 +65,9 @@ class UserTest extends TestCase
      */
     public function testJsonSerialize(User $user)
     {
-        $this->assertArrayHasKey('id', $user->jsonSerialize());
-        $this->assertArrayHasKey('team_id', $user->jsonSerialize());
-        $this->assertArrayHasKey('name', $user->jsonSerialize());
-        $this->assertArrayHasKey('deleted', $user->jsonSerialize());
-        $this->assertArrayHasKey('color', $user->jsonSerialize());
-        $this->assertArrayHasKey('real_name', $user->jsonSerialize());
-        $this->assertArrayHasKey('tz', $user->jsonSerialize());
-        $this->assertArrayHasKey('tz_label', $user->jsonSerialize());
-        $this->assertArrayHasKey('tz_offset', $user->jsonSerialize());
-        $this->assertArrayHasKey('profile', $user->jsonSerialize());
-        $this->assertArrayHasKey('is_admin', $user->jsonSerialize());
-        $this->assertArrayHasKey('is_owner', $user->jsonSerialize());
-        $this->assertArrayHasKey('is_primary_owner', $user->jsonSerialize());
-        $this->assertArrayHasKey('is_restricted', $user->jsonSerialize());
-        $this->assertArrayHasKey('is_ultra_restricted', $user->jsonSerialize());
-        $this->assertArrayHasKey('is_bot', $user->jsonSerialize());
-        $this->assertArrayHasKey('updated', $user->jsonSerialize());
-        $this->assertArrayHasKey('is_app_user', $user->jsonSerialize());
-        $this->assertArrayHasKey('has_2fa', $user->jsonSerialize());
-        $this->assertArrayHasKey('locale', $user->jsonSerialize());
-        $this->assertArrayHasKey('presence', $user->jsonSerialize());
+        foreach (self::$attributes as $key => $value) {
+            $this->assertArrayHasKey($key, $user->jsonSerialize());
+        }
     }
 
     /**

@@ -29,7 +29,7 @@ final class Client implements \Halnique\Slack\WebAPI\Contracts\Endpoints\Client
             if (!$response) {
                 $response = [
                     'ok' => false,
-                    'error' => Error::FATAL_ERROR,
+                    'error' => Error::UNKNOWN_ERROR,
                 ];
             }
         } catch (\GuzzleHttp\Exception\GuzzleException | \Throwable $exception) {
