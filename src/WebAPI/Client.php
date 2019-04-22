@@ -17,7 +17,7 @@ class Client implements Contracts\Client
         $dotEnv->load();
     }
 
-    public static function create(): self
+    public static function create(): Contracts\Client
     {
         return new self(new Endpoints\Client(new \GuzzleHttp\Client()));
     }

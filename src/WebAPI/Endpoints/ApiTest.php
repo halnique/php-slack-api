@@ -7,7 +7,7 @@ use Halnique\Slack\WebAPI\Responses;
 
 class ApiTest implements \Halnique\Slack\WebAPI\Contracts\Endpoints\Api
 {
-    private const METHOD = 'api.test';
+    const METHOD = 'api.test';
 
     private $client;
 
@@ -32,11 +32,16 @@ class ApiTest implements \Halnique\Slack\WebAPI\Contracts\Endpoints\Api
 
     public function uri(): Uri
     {
-        return new Uri($this->httpMethod(), self::METHOD);
+        return Uri::of($this->httpMethod(), self::METHOD);
     }
 
     public function options(): Options
     {
-        return new Options($this->httpMethod());
+        return Options::of($this->httpMethod(), $this->params());
+    }
+
+    public function params(): array
+    {
+        return [];
     }
 }

@@ -7,34 +7,39 @@ use HalniqueTest\Slack\TestCase;
 
 class ErrorTest extends TestCase
 {
-    public function test__construct()
+    public function testOf()
     {
-        $this->assertInstanceOf(Error::class, new Error(\Faker\Factory::create()->word));
+        $this->assertInstanceOf(Error::class, Error::of(\Faker\Factory::create()->word));
+    }
+
+    public function testUnknown()
+    {
+        $this->assertInstanceOf(Error::class, Error::unknown());
     }
 
     public function testValue()
     {
         $error = \Faker\Factory::create()->word;
-        $this->assertEquals($error, (new Error($error))->value());
+        $this->assertEquals($error, Error::of($error)->value());
     }
 
     public function testEquals()
     {
         $error = \Faker\Factory::create()->word;
-        $this->assertTrue((new Error($error))->equals(new Error($error)));
+        $this->assertTrue(Error::of($error)->equals(Error::of($error)));
     }
 
     public function testJsonSerialize()
     {
         $error = \Faker\Factory::create()->word;
-        $this->assertEquals((new Error($error))->value(), (new Error($error))->jsonSerialize());
-        $this->assertEquals('"' . (new Error($error))->value() . '"', json_encode(new Error($error)));
+        $this->assertEquals(Error::of($error)->value(), Error::of($error)->jsonSerialize());
+        $this->assertEquals('"' . Error::of($error)->value() . '"', json_encode(Error::of($error)));
     }
 
     public function test__toString()
     {
         $error = \Faker\Factory::create()->word;
-        $this->assertEquals((new Error($error))->value(), (new Error($error))->__toString());
-        $this->assertEquals((new Error($error))->value(), (new Error($error)));
+        $this->assertEquals(Error::of($error)->value(), Error::of($error)->__toString());
+        $this->assertEquals(Error::of($error)->value(), Error::of($error));
     }
 }

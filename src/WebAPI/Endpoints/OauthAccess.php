@@ -7,7 +7,7 @@ use Halnique\Slack\WebAPI\Responses;
 
 class OauthAccess implements \Halnique\Slack\WebAPI\Contracts\Endpoints\Api
 {
-    private const METHOD = 'oauth.access';
+    const METHOD = 'oauth.access';
 
     private $client;
 
@@ -44,11 +44,16 @@ class OauthAccess implements \Halnique\Slack\WebAPI\Contracts\Endpoints\Api
 
     public function uri(): Uri
     {
-        return new Uri($this->httpMethod(), self::METHOD, $this->params);
+        return Uri::of($this->httpMethod(), self::METHOD, $this->params);
     }
 
     public function options(): Options
     {
-        return new Options($this->httpMethod(), $this->params);
+        return Options::of($this->httpMethod(), $this->params());
+    }
+
+    public function params(): array
+    {
+        return $this->params;
     }
 }

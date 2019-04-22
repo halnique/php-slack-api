@@ -7,54 +7,49 @@ use Halnique\Slack\WebAPI\Endpoints\HttpMethod;
 use Halnique\Slack\WebAPI\Endpoints\Options;
 use Halnique\Slack\WebAPI\Endpoints\Uri;
 use Halnique\Slack\WebAPI\Endpoints\WithAuthenticate;
+use HalniqueTest\Slack\Mock\GuzzleHttpClient;
 use HalniqueTest\Slack\TestCase;
 
 class AuthTestTest extends TestCase
 {
     use WithAuthenticate;
 
+    /** @var AuthTest */
+    private $api;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->api = new AuthTest(new Client(new GuzzleHttpClient()));
+    }
+
     public function test__construct()
     {
-        $authTest = new AuthTest(new Client());
-        $this->assertInstanceOf(AuthTest::class, $authTest);
-        return $authTest;
+        $this->assertInstanceOf(AuthTest::class, $this->api);
     }
 
-    /**
-     * @depends test__construct
-     * @param AuthTest $authTest
-     */
-    public function testCall(AuthTest $authTest)
+    public function testCall()
     {
-        $this->assertInstanceOf(\Halnique\Slack\WebAPI\Responses\AuthTest::class, $authTest->call());
+        $this->assertInstanceOf(\Halnique\Slack\WebAPI\Responses\AuthTest::class, $this->api->call());
     }
 
-    /**
-     * @depends test__construct
-     * @param AuthTest $authTest
-     */
-    public function testHttpMethod(AuthTest $authTest)
+    public function testHttpMethod()
     {
-        $this->assertEquals(HttpMethod::post(), $authTest->httpMethod());
+        $this->assertEquals(HttpMethod::post(), $this->api->httpMethod());
     }
 
-    /**
-     * @depends test__construct
-     * @param AuthTest $authTest
-     * @throws \ReflectionException
-     */
-    public function testUri(AuthTest $authTest)
+    public function testUri()
     {
-        $method = (new \ReflectionClass(AuthTest::class))->getConstant('METHOD');
-        $this->assertEquals(new Uri(HttpMethod::post(), $method), $authTest->uri());
+        $this->assertEquals(Uri::of(HttpMethod::post(), AuthTest::METHOD), $this->api->uri());
     }
 
-    /**
-     * @depends test__construct
-     * @param AuthTest $authTest
-     */
-    public function testOptions(AuthTest $authTest)
+    public function testOptions()
     {
-        $this->assertEquals(new Options(HttpMethod::post(), [], $this->token()), $authTest->options());
+        $this->assertEquals(Options::of(HttpMethod::post(), [], $this->token()), $this->api->options());
+    }
+
+    public function testParams()
+    {
+        $this->assertEquals([], $this->api->params());
     }
 }

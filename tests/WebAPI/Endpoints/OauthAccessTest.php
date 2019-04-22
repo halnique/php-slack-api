@@ -6,68 +6,59 @@ use Halnique\Slack\WebAPI\Endpoints\OauthAccess;
 use Halnique\Slack\WebAPI\Endpoints\HttpMethod;
 use Halnique\Slack\WebAPI\Endpoints\Options;
 use Halnique\Slack\WebAPI\Endpoints\Uri;
+use HalniqueTest\Slack\Mock\GuzzleHttpClient;
 use HalniqueTest\Slack\TestCase;
 
 class OauthAccessTest extends TestCase
 {
-    private static $params;
+    /** @var OauthAccess */
+    private $api;
 
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-    }
+    private $params;
 
-    public function test__construct()
+    protected function setUp(): void
     {
+        parent::setUp();
         $faker = \Faker\Factory::create();
         $clientId = $faker->word;
         $clientSecret = $faker->word;
         $code = $faker->word;
-        self::$params = [
+        $this->api = new OauthAccess(new Client(new GuzzleHttpClient()), $clientId, $clientSecret, $code);
+        $this->params = [
             'client_id' => $clientId,
             'client_secret' => $clientSecret,
             'code' => $code,
         ];
-        $oauthAccess = new OauthAccess(new Client(), $clientId, $clientSecret, $code);
-        $this->assertInstanceOf(OauthAccess::class, $oauthAccess);
-        return $oauthAccess;
     }
 
-    /**
-     * @depends test__construct
-     * @param OauthAccess $oauthAccess
-     */
-    public function testCall(OauthAccess $oauthAccess)
+    public function test__construct()
     {
-        $this->assertInstanceOf(\Halnique\Slack\WebAPI\Responses\OauthAccess::class, $oauthAccess->call());
+        $this->assertInstanceOf(OauthAccess::class, $this->api);
+        return $this->api;
     }
 
-    /**
-     * @depends test__construct
-     * @param OauthAccess $oauthAccess
-     */
-    public function testHttpMethod(OauthAccess $oauthAccess)
+    public function testCall()
     {
-        $this->assertEquals(HttpMethod::get(), $oauthAccess->httpMethod());
+        $this->assertInstanceOf(\Halnique\Slack\WebAPI\Responses\OauthAccess::class, $this->api->call());
     }
 
-    /**
-     * @depends test__construct
-     * @param OauthAccess $oauthAccess
-     * @throws \ReflectionException
-     */
-    public function testUri(OauthAccess $oauthAccess)
+    public function testHttpMethod()
     {
-        $method = (new \ReflectionClass(OauthAccess::class))->getConstant('METHOD');
-        $this->assertEquals(new Uri(HttpMethod::get(), $method, self::$params), $oauthAccess->uri());
+        $this->assertEquals(HttpMethod::get(), $this->api->httpMethod());
     }
 
-    /**
-     * @depends test__construct
-     * @param OauthAccess $oauthAccess
-     */
-    public function testOptions(OauthAccess $oauthAccess)
+    public function testUri()
     {
-        $this->assertEquals(new Options(HttpMethod::get(), self::$params), $oauthAccess->options());
+        $this->assertEquals(Uri::of(HttpMethod::get(), OauthAccess::METHOD, $this->params), $this->api->uri());
+    }
+
+    public function testOptions()
+    {
+        $this->assertEquals(Options::of(HttpMethod::get(), $this->params), $this->api->options());
+    }
+
+    public function testParams()
+    {
+        $this->assertEquals($this->params, $this->api->params());
     }
 }

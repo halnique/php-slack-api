@@ -9,7 +9,7 @@ final class UsersLookupByEmail implements \Halnique\Slack\WebAPI\Contracts\Endpo
 {
     use WithAuthenticate;
 
-    private const METHOD = 'users.lookupByEmail';
+    const METHOD = 'users.lookupByEmail';
 
     private $client;
 
@@ -40,11 +40,16 @@ final class UsersLookupByEmail implements \Halnique\Slack\WebAPI\Contracts\Endpo
 
     public function uri(): Uri
     {
-        return new Uri($this->httpMethod(), self::METHOD, $this->params);
+        return Uri::of($this->httpMethod(), self::METHOD, $this->params);
     }
 
     public function options(): Options
     {
-        return new Options($this->httpMethod(), $this->params, $this->token());
+        return Options::of($this->httpMethod(), $this->params(), $this->token());
+    }
+
+    public function params(): array
+    {
+        return $this->params;
     }
 }

@@ -15,7 +15,7 @@ class UriTest extends TestCase
         foreach ($faker->words as $word) {
             $params[$faker->word] = $word;
         }
-        $uri = new Uri(HttpMethod::get(), $faker->word, $params);
+        $uri = Uri::of(HttpMethod::get(), $faker->word, $params);
         $this->assertInstanceOf(Uri::class, $uri);
         return $uri;
     }

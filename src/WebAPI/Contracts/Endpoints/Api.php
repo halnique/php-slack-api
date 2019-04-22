@@ -16,4 +16,6 @@ interface Api
     public function uri(): Uri;
 
     public function options(): Options;
+
+    public function params(): array;
 }

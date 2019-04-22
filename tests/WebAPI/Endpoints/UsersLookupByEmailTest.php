@@ -7,65 +7,56 @@ use Halnique\Slack\WebAPI\Endpoints\Options;
 use Halnique\Slack\WebAPI\Endpoints\Uri;
 use Halnique\Slack\WebAPI\Endpoints\UsersLookupByEmail;
 use Halnique\Slack\WebAPI\Endpoints\WithAuthenticate;
+use HalniqueTest\Slack\Mock\GuzzleHttpClient;
 use HalniqueTest\Slack\TestCase;
 
 class UsersLookupByEmailTest extends TestCase
 {
     use WithAuthenticate;
 
-    private static $email;
+    /** @var UsersLookupByEmail */
+    private $api;
 
-    public static function setUpBeforeClass(): void
+    private $params;
+
+    protected function setUp(): void
     {
-        parent::setUpBeforeClass();
+        parent::setUp();
 
-        self::$email = \Faker\Factory::create()->email;
+        $email = \Faker\Factory::create()->email;
+        $this->api = new UsersLookupByEmail(new Client(new GuzzleHttpClient()), $email);
+        $this->params = [
+            'email' => $email,
+        ];
     }
 
     public function test__construct()
     {
-        $usersLookupByEmail = new UsersLookupByEmail(new Client(), self::$email);
-        $this->assertInstanceOf(UsersLookupByEmail::class, $usersLookupByEmail);
-        return $usersLookupByEmail;
+        $this->assertInstanceOf(UsersLookupByEmail::class, $this->api);
     }
 
-    /**
-     * @depends test__construct
-     * @param UsersLookupByEmail $usersLookupByEmail
-     */
-    public function testCall(UsersLookupByEmail $usersLookupByEmail)
+    public function testCall()
     {
-        $this->assertInstanceOf(\Halnique\Slack\WebAPI\Responses\UsersLookupByEmail::class,
-            $usersLookupByEmail->call());
+        $this->assertInstanceOf(\Halnique\Slack\WebAPI\Responses\UsersLookupByEmail::class, $this->api->call());
     }
 
-    /**
-     * @depends test__construct
-     * @param UsersLookupByEmail $usersLookupByEmail
-     */
-    public function testHttpMethod(UsersLookupByEmail $usersLookupByEmail)
+    public function testHttpMethod()
     {
-        $this->assertEquals(HttpMethod::get(), $usersLookupByEmail->httpMethod());
+        $this->assertEquals(HttpMethod::get(), $this->api->httpMethod());
     }
 
-    /**
-     * @depends test__construct
-     * @param UsersLookupByEmail $usersLookupByEmail
-     * @throws \ReflectionException
-     */
-    public function testUri(UsersLookupByEmail $usersLookupByEmail)
+    public function testUri()
     {
-        $method = (new \ReflectionClass(UsersLookupByEmail::class))->getConstant('METHOD');
-        $this->assertEquals(new Uri(HttpMethod::get(), $method, ['email' => self::$email]), $usersLookupByEmail->uri());
+        $this->assertEquals(Uri::of(HttpMethod::get(), UsersLookupByEmail::METHOD, $this->params), $this->api->uri());
     }
 
-    /**
-     * @depends test__construct
-     * @param UsersLookupByEmail $usersLookupByEmail
-     */
-    public function testOptions(UsersLookupByEmail $usersLookupByEmail)
+    public function testOptions()
     {
-        $this->assertEquals(new Options(HttpMethod::get(), ['email' => self::$email], $this->token()),
-            $usersLookupByEmail->options());
+        $this->assertEquals(Options::of(HttpMethod::get(), $this->params, $this->token()), $this->api->options());
+    }
+
+    public function testParams()
+    {
+        $this->assertEquals($this->params, $this->api->params());
     }
 }

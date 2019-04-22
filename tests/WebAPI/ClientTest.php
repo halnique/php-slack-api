@@ -7,15 +7,23 @@ use Halnique\Slack\WebAPI\Responses\OauthAccess;
 use Halnique\Slack\WebAPI\Responses\ApiTest;
 use Halnique\Slack\WebAPI\Responses\AuthTest;
 use Halnique\Slack\WebAPI\Responses\UsersLookupByEmail;
+use HalniqueTest\Slack\Mock\GuzzleHttpClient;
 use HalniqueTest\Slack\TestCase;
 
 class ClientTest extends TestCase
 {
+    /** @var Client */
+    private $client;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->client = new Client(new Endpoints\Client(new GuzzleHttpClient()));
+    }
+
     public function test__construct()
     {
-        $client = new Client(new Endpoints\Client());
-        $this->assertInstanceOf(Client::class, $client);
-        return $client;
+        $this->assertInstanceOf(Client::class, $this->client);
     }
 
     public function testCreate()
@@ -23,41 +31,24 @@ class ClientTest extends TestCase
         $this->assertInstanceOf(Client::class, Client::create());
     }
 
-    /**
-     * @depends test__construct
-     * @param Client $client
-     */
-    public function testOauthAccess(Client $client)
+    public function testOauthAccess()
     {
         $faker = \Faker\Factory::create();
-        $this->assertInstanceOf(OauthAccess::class, $client->oauthAccess($faker->word, $faker->word, $faker->word));
+        $this->assertInstanceOf(OauthAccess::class, $this->client->oauthAccess($faker->word, $faker->word, $faker->word));
     }
 
-    /**
-     * @depends test__construct
-     * @param Client $client
-     */
-    public function testAuthTest(Client $client)
+    public function testAuthTest()
     {
-        $this->assertInstanceOf(AuthTest::class, $client->authTest());
+        $this->assertInstanceOf(AuthTest::class, $this->client->authTest());
     }
 
-    /**
-     * @depends test__construct
-     * @param Client $client
-     */
-    public function testApiTest(Client $client)
+    public function testApiTest()
     {
-        $this->assertInstanceOf(ApiTest::class, $client->apiTest());
+        $this->assertInstanceOf(ApiTest::class, $this->client->apiTest());
     }
 
-    /**
-     * @depends test__construct
-     * @param Client $client
-     */
-    public function testUsersLookupByEmail(Client $client)
+    public function testUsersLookupByEmail()
     {
-        $this->assertInstanceOf(UsersLookupByEmail::class,
-            $client->usersLookupByEmail(\Faker\Factory::create()->email));
+        $this->assertInstanceOf(UsersLookupByEmail::class, $this->client->usersLookupByEmail(\Faker\Factory::create()->email));
     }
 }

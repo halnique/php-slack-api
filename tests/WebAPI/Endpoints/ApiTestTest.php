@@ -6,52 +6,48 @@ use Halnique\Slack\WebAPI\Endpoints\ApiTest;
 use Halnique\Slack\WebAPI\Endpoints\HttpMethod;
 use Halnique\Slack\WebAPI\Endpoints\Options;
 use Halnique\Slack\WebAPI\Endpoints\Uri;
+use HalniqueTest\Slack\Mock\GuzzleHttpClient;
 use HalniqueTest\Slack\TestCase;
 
 class ApiTestTest extends TestCase
 {
+    /** @var ApiTest */
+    private $api;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->api = new ApiTest(new Client(new GuzzleHttpClient()));
+
+    }
+
     public function test__construct()
     {
-        $apiTest = new ApiTest(new Client());
-        $this->assertInstanceOf(ApiTest::class, $apiTest);
-        return $apiTest;
+        $this->assertInstanceOf(ApiTest::class, $this->api);
     }
 
-    /**
-     * @depends test__construct
-     * @param ApiTest $apiTest
-     */
-    public function testCall(ApiTest $apiTest)
+    public function testCall()
     {
-        $this->assertInstanceOf(\Halnique\Slack\WebAPI\Responses\ApiTest::class, $apiTest->call());
+        $this->assertInstanceOf(\Halnique\Slack\WebAPI\Responses\ApiTest::class, $this->api->call());
     }
 
-    /**
-     * @depends test__construct
-     * @param ApiTest $apiTest
-     */
-    public function testHttpMethod(ApiTest $apiTest)
+    public function testHttpMethod()
     {
-        $this->assertEquals(HttpMethod::post(), $apiTest->httpMethod());
+        $this->assertEquals(HttpMethod::post(), $this->api->httpMethod());
     }
 
-    /**
-     * @depends test__construct
-     * @param ApiTest $apiTest
-     * @throws \ReflectionException
-     */
-    public function testUri(ApiTest $apiTest)
+    public function testUri()
     {
-        $method = (new \ReflectionClass(ApiTest::class))->getConstant('METHOD');
-        $this->assertEquals(new Uri(HttpMethod::post(), $method), $apiTest->uri());
+        $this->assertEquals(Uri::of(HttpMethod::post(), ApiTest::METHOD), $this->api->uri());
     }
 
-    /**
-     * @depends test__construct
-     * @param ApiTest $apiTest
-     */
-    public function testOptions(ApiTest $apiTest)
+    public function testOptions()
     {
-        $this->assertEquals(new Options(HttpMethod::post()), $apiTest->options());
+        $this->assertEquals(Options::of(HttpMethod::post(), []), $this->api->options());
+    }
+
+    public function testParams()
+    {
+        $this->assertEquals([], $this->api->params());
     }
 }

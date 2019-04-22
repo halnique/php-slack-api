@@ -9,7 +9,7 @@ class AuthTest implements \Halnique\Slack\WebAPI\Contracts\Endpoints\Api
 {
     use WithAuthenticate;
 
-    private const METHOD = 'auth.test';
+    const METHOD = 'auth.test';
 
     private $client;
 
@@ -34,11 +34,16 @@ class AuthTest implements \Halnique\Slack\WebAPI\Contracts\Endpoints\Api
 
     public function uri(): Uri
     {
-        return new Uri($this->httpMethod(), self::METHOD);
+        return Uri::of($this->httpMethod(), self::METHOD);
     }
 
     public function options(): Options
     {
-        return new Options($this->httpMethod(), [], $this->token());
+        return Options::of($this->httpMethod(), $this->params(), $this->token());
+    }
+
+    public function params(): array
+    {
+        return [];
     }
 }

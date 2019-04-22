@@ -34,8 +34,8 @@ class ClientTest extends TestCase
         $client = new Client(new GuzzleHttpClient());
         $response = $client->request(
             $httpMethod,
-            new Uri($httpMethod, $faker->word, $params),
-            new Options($httpMethod, $params, $this->token())
+            Uri::of($httpMethod, $faker->word, $params),
+            Options::of($httpMethod, $params, $this->token())
         );
         $this->assertArrayHasKey('ok', $response);
         $this->assertArrayHasKey('error', $response);
@@ -47,8 +47,8 @@ class ClientTest extends TestCase
         $client = new Client($guzzleClient);
         $response = $client->request(
             $httpMethod,
-            new Uri($httpMethod, $faker->word, $params),
-            new Options($httpMethod, $params, $this->token())
+            Uri::of($httpMethod, $faker->word, $params),
+            Options::of($httpMethod, $params, $this->token())
         );
         $this->assertArrayHasKey('ok', $response);
         $this->assertArrayHasKey('error', $response);

@@ -15,7 +15,7 @@ class Response implements \JsonSerializable
     public function __construct(array $attributes)
     {
         $this->ok = $attributes['ok'] ?? null;
-        $this->error = isset($attributes['error']) ? new Error($attributes['error']) : null;
+        $this->error = isset($attributes['error']) ? Error::of($attributes['error']) : null;
     }
 
     public function __get(string $name)

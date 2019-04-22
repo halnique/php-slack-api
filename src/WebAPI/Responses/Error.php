@@ -11,9 +11,19 @@ final class Error implements ValueObject
 
     private $error;
 
-    public function __construct(string $error)
+    private function __construct(string $error)
     {
         $this->error = $error;
+    }
+
+    public static function of(string $error): self
+    {
+        return new self($error);
+    }
+
+    public static function unknown(): self
+    {
+        return new self(self::UNKNOWN_ERROR);
     }
 
     public function value(): string
