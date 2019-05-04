@@ -24,7 +24,7 @@ class ApiTest extends TestCase
 
     private $params = [];
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
