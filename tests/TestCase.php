@@ -15,6 +15,21 @@ class TestCase extends \PHPUnit\Framework\TestCase
         $dotEnv->load();
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+    }
+
     public function faker(): Faker\Generator
     {
         return Faker\Factory::create();
