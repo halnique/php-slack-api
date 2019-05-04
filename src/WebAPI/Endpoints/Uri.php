@@ -8,7 +8,9 @@ use Halnique\Slack\WebAPI\Contracts\ValueObject;
 final class Uri implements ValueObject
 {
     private const DELIMITER = '/';
+
     private const QUERY_SEPARATOR = '?';
+
     private const BASE_URL = 'https://slack.com/api';
 
     private $uri;

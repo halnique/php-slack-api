@@ -3,15 +3,11 @@
 namespace Halnique\Slack\WebAPI\Contracts;
 
 
+use Halnique\Slack\WebAPI\Endpoints\HttpMethod;
 use Halnique\Slack\WebAPI\Responses;
+use Halnique\Slack\WebAPI\Responses\Response;
 
 interface Client
 {
-    public function oauthAccess(string $clientId, string $clientSecret, string $code): Responses\OauthAccess;
-
-    public function authTest(): Responses\AuthTest;
-
-    public function apiTest(): Responses\ApiTest;
-
-    public function usersLookUpByEmail(string $email): Responses\UsersLookupByEmail;
+    public function call(HttpMethod $httpMethod, string $method, array $params = []): Responses\Response;
 }

@@ -4,15 +4,23 @@ namespace Halnique\Slack\WebAPI\Endpoints;
 
 
 use GuzzleHttp\ClientInterface;
-use Halnique\Slack\WebAPI\Responses\Error;
+use GuzzleHttp\Exception\GuzzleException;
+use Halnique\Slack\WebAPI\Contracts;
 
-final class Client implements \Halnique\Slack\WebAPI\Contracts\Endpoints\Client
+final class Client implements Contracts\Endpoints\Client
 {
+    const UNKNOWN_ERROR = 'unknown_error';
+
     private $client;
 
-    public function __construct(ClientInterface $client)
+    private function __construct(ClientInterface $client)
     {
         $this->client = $client;
+    }
+
+    public static function of(ClientInterface $client): self
+    {
+        return new self($client);
     }
 
     public function request(HttpMethod $httpMethod, Uri $uri, Options $options): array
@@ -29,10 +37,10 @@ final class Client implements \Halnique\Slack\WebAPI\Contracts\Endpoints\Client
             if (!$response) {
                 $response = [
                     'ok' => false,
-                    'error' => Error::UNKNOWN_ERROR,
+                    'error' => self::UNKNOWN_ERROR,
                 ];
             }
-        } catch (\GuzzleHttp\Exception\GuzzleException | \Throwable $exception) {
+        } catch (GuzzleException | \Throwable $exception) {
             $response = [
                 'ok' => false,
                 'error' => $exception->getMessage(),

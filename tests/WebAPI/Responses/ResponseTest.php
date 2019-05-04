@@ -7,29 +7,49 @@ use HalniqueTest\Slack\TestCase;
 
 class ResponseTest extends TestCase
 {
-    public function test__construct()
+    public function test__get()
     {
-        $response = new Response([]);
-        $this->assertInstanceOf(Response::class, $response);
-        return $response;
+        $attributes = $this->randomAttributes();
+        $response = Response::of($attributes);
+        foreach ($attributes as $key => $value) {
+            $this->assertEquals($value, $response->$key);
+        }
     }
 
-    /**
-     * @depends test__construct
-     * @param Response $response
-     */
-    public function testJsonSerialize(Response $response)
+    public function testValue()
     {
-        $this->assertArrayHasKey('ok', $response->jsonSerialize());
-        $this->assertArrayHasKey('error', $response->jsonSerialize());
+        $attributes = $this->randomAttributes();
+        $this->assertEquals($attributes, Response::of($attributes)->value());
     }
 
-    /**
-     * @depends test__construct
-     * @param Response $response
-     */
-    public function test__toString(Response $response)
+    public function testEquals()
     {
-        $this->assertEquals($response, json_encode($response));
+        $attributes = $this->randomAttributes();
+        $this->assertTrue(Response::of($attributes)->equals(Response::of($attributes)));
+        $newAttributes = $this->randomAttributes();
+        $this->assertFalse(Response::of($attributes)->equals(Response::of($newAttributes)));
+    }
+
+    public function testJsonSerialize()
+    {
+        $attributes = $this->randomAttributes();
+        $this->assertEquals($attributes, Response::of($attributes)->jsonSerialize());
+    }
+
+    public function test__toString()
+    {
+        $attributes = $this->randomAttributes();
+        $this->assertEquals(json_encode($attributes), Response::of($attributes));
+    }
+
+    private function randomAttributes(): array
+    {
+        $attributes = [];
+
+        for ($i = 0; $i < $this->faker()->randomDigit; $i++) {
+            $attributes[$this->faker()->word] = $this->faker()->word;
+        }
+
+        return $attributes;
     }
 }

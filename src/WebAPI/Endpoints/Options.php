@@ -21,6 +21,7 @@ final class Options implements ValueObject
         if ($token) {
             $headers['Authorization'] = "Bearer {$token}";
         }
+
         $this->options['headers'] = $headers;
     }
 
