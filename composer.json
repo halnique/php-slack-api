@@ -20,7 +20,8 @@
         "phpunit/phpunit": "^7.5",
         "phpunit/php-invoker": "^2.0",
         "fzaninotto/faker": "^1.8",
-        "halnique/php-string": "^1.0"
+        "halnique/php-string": "^1.0",
+        "php-coveralls/php-coveralls": "^2.1"
     },
     "autoload": {
         "psr-4": {

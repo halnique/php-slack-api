@@ -15,7 +15,11 @@ install:
   - travis_retry composer install --no-interaction --no-suggest
 
 before_script:
-  - cp .env.example .env
+  - mkdir -p build/logs
+  - chmod -R 777 build/logs
 
 script:
-  - phpunit
+  - phpunit --coverage-clover build/logs/clover.xml
+
+after_success:
+  - travis_retry php vendor/bin/php-coveralls
