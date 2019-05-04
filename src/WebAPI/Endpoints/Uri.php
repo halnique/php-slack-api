@@ -8,12 +8,14 @@ use Halnique\Slack\WebAPI\Contracts\ValueObject;
 final class Uri implements ValueObject
 {
     private const DELIMITER = '/';
+
     private const QUERY_SEPARATOR = '?';
+
     private const BASE_URL = 'https://slack.com/api';
 
     private $uri;
 
-    public function __construct(HttpMethod $httpMethod, string $method, array $params = [])
+    private function __construct(HttpMethod $httpMethod, string $method, array $params = [])
     {
         $uri = implode(self::DELIMITER, [self::BASE_URL, $method]);
 
@@ -22,6 +24,11 @@ final class Uri implements ValueObject
         }
 
         $this->uri = $uri;
+    }
+
+    public static function of(HttpMethod $httpMethod, string $method, array $params = []): self
+    {
+        return new self($httpMethod, $method, $params);
     }
 
     public function value(): string

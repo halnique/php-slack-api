@@ -4,6 +4,7 @@ namespace HalniqueTest\Slack;
 
 
 use Dotenv\Dotenv;
+use Faker;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -27,5 +28,10 @@ class TestCase extends \PHPUnit\Framework\TestCase
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
+    }
+
+    public function faker(): Faker\Generator
+    {
+        return Faker\Factory::create();
     }
 }

@@ -3,36 +3,48 @@
 namespace Halnique\Slack\WebAPI\Responses;
 
 
-/**
- * @property-read bool|null ok
- * @property-read Error|null error
- */
-class Response implements \JsonSerializable
-{
-    private $ok;
-    private $error;
+use Halnique\Slack\WebAPI\Contracts;
+use Halnique\Slack\WebAPI\Contracts\ValueObject;
 
-    public function __construct(array $attributes)
+/**
+ * @property-read bool ok
+ */
+class Response implements Contracts\Responses\Response
+{
+    private $attributes = [];
+
+    private function __construct(array $attributes)
     {
-        $this->ok = $attributes['ok'] ?? null;
-        $this->error = isset($attributes['error']) ? new Error($attributes['error']) : null;
+        $this->attributes = $attributes;
+    }
+
+    public static function of(array $attributes): Response
+    {
+        return new static($attributes);
     }
 
     public function __get(string $name)
     {
-        return $this->$name ?? null;
+        return (isset($this->attributes[$name])) ? $this->attributes[$name] : null;
+    }
+
+    public function value(): array
+    {
+        return $this->attributes;
+    }
+
+    public function equals(ValueObject $object): bool
+    {
+        return $this->value() === $object->value();
     }
 
     public function jsonSerialize(): array
     {
-        return [
-            'ok' => $this->ok,
-            'error' => $this->error,
-        ];
+        return $this->value();
     }
 
     public function __toString(): string
     {
-        return json_encode($this);
+        return json_encode($this->value());
     }
 }

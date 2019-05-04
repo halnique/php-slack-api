@@ -3,19 +3,15 @@
 namespace HalniqueTest\Slack\WebAPI;
 
 use Halnique\Slack\WebAPI\Client;
-use Halnique\Slack\WebAPI\Responses\OauthAccess;
-use Halnique\Slack\WebAPI\Responses\ApiTest;
-use Halnique\Slack\WebAPI\Responses\AuthTest;
-use Halnique\Slack\WebAPI\Responses\UsersLookupByEmail;
+use Halnique\Slack\WebAPI\Endpoints\HttpMethod;
+use Halnique\Slack\WebAPI\Responses\Response;
 use HalniqueTest\Slack\TestCase;
 
 class ClientTest extends TestCase
 {
     public function test__construct()
     {
-        $client = new Client(new Endpoints\Client());
-        $this->assertInstanceOf(Client::class, $client);
-        return $client;
+        $this->assertInstanceOf(Client::class, new Client(new Endpoints\Client()));
     }
 
     public function testCreate()
@@ -23,41 +19,50 @@ class ClientTest extends TestCase
         $this->assertInstanceOf(Client::class, Client::create());
     }
 
-    /**
-     * @depends test__construct
-     * @param Client $client
-     */
-    public function testOauthAccess(Client $client)
+    public function testCall()
     {
-        $faker = \Faker\Factory::create();
-        $this->assertInstanceOf(OauthAccess::class, $client->oauthAccess($faker->word, $faker->word, $faker->word));
+        $this->assertInstanceOf(Response::class, Client::create()->call(
+            $this->randomHttpMethod(),
+            $this->faker()->word,
+            $this->randomParams()
+        ));
     }
 
-    /**
-     * @depends test__construct
-     * @param Client $client
-     */
-    public function testAuthTest(Client $client)
+    private function randomHttpMethod(): HttpMethod
     {
-        $this->assertInstanceOf(AuthTest::class, $client->authTest());
+        switch ($this->faker()->randomElement([
+            HttpMethod::GET,
+            HttpMethod::HEAD,
+            HttpMethod::POST,
+            HttpMethod::PUT,
+            HttpMethod::DELETE,
+            HttpMethod::PATCH
+        ])) {
+            case HttpMethod::GET:
+                return HttpMethod::get();
+            case HttpMethod::HEAD:
+                return HttpMethod::head();
+            case HttpMethod::POST:
+                return HttpMethod::post();
+            case HttpMethod::PUT:
+                return HttpMethod::put();
+            case HttpMethod::DELETE:
+                return HttpMethod::delete();
+            case HttpMethod::PATCH:
+                return HttpMethod::patch();
+        }
+
+        return HttpMethod::get();
     }
 
-    /**
-     * @depends test__construct
-     * @param Client $client
-     */
-    public function testApiTest(Client $client)
+    private function randomParams(): array
     {
-        $this->assertInstanceOf(ApiTest::class, $client->apiTest());
-    }
+        $params = [];
 
-    /**
-     * @depends test__construct
-     * @param Client $client
-     */
-    public function testUsersLookupByEmail(Client $client)
-    {
-        $this->assertInstanceOf(UsersLookupByEmail::class,
-            $client->usersLookupByEmail(\Faker\Factory::create()->email));
+        for ($i = 0; $i < $this->faker()->randomDigit; $i++) {
+            $params[$this->faker()->word] = $this->faker()->word;
+        }
+
+        return $params;
     }
 }

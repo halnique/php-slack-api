@@ -9,7 +9,7 @@ final class Options implements ValueObject
 {
     private $options = [];
 
-    public function __construct(HttpMethod $httpMethod, array $params = [], string $token = '')
+    private function __construct(HttpMethod $httpMethod, array $params, string $token)
     {
         $headers = [];
 
@@ -21,7 +21,13 @@ final class Options implements ValueObject
         if ($token) {
             $headers['Authorization'] = "Bearer {$token}";
         }
+
         $this->options['headers'] = $headers;
+    }
+
+    public static function of(HttpMethod $httpMethod, array $params, string $token = ''): self
+    {
+        return new self($httpMethod, $params, $token);
     }
 
     public function value(): array

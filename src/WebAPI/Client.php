@@ -4,6 +4,8 @@ namespace Halnique\Slack\WebAPI;
 
 
 use Dotenv\Dotenv;
+use GuzzleHttp;
+use Halnique\Slack\WebAPI\Endpoints\HttpMethod;
 
 class Client implements Contracts\Client
 {
@@ -19,26 +21,11 @@ class Client implements Contracts\Client
 
     public static function create(): self
     {
-        return new self(new Endpoints\Client(new \GuzzleHttp\Client()));
+        return new self(Endpoints\Client::of(new GuzzleHttp\Client()));
     }
 
-    public function oauthAccess(string $clientId, string $clientSecret, string $code): Responses\OauthAccess
+    public function call(HttpMethod $httpMethod, string $method, array $params = []): Responses\Response
     {
-        return (new Endpoints\OauthAccess($this->client, $clientId, $clientSecret, $code))->call();
-    }
-
-    public function authTest(): Responses\AuthTest
-    {
-        return (new Endpoints\AuthTest($this->client))->call();
-    }
-
-    public function apiTest(): Responses\ApiTest
-    {
-        return (new Endpoints\ApiTest($this->client))->call();
-    }
-
-    public function usersLookupByEmail(string $email): Responses\UsersLookupByEmail
-    {
-        return (new Endpoints\UsersLookupByEmail($this->client, $email))->call();
+        return (Endpoints\Api::of($this->client, $httpMethod, $method, $params))->call();
     }
 }

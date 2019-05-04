@@ -9,9 +9,5 @@ use Halnique\Slack\WebAPI\Endpoints\Uri;
 
 interface Client
 {
-    public function request(
-        HttpMethod $httpMethod,
-        Uri $uri,
-        Options $options
-    ): array;
+    public function request(HttpMethod $httpMethod, Uri $uri, Options $options): array;
 }

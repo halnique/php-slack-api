@@ -8,82 +8,82 @@ use HalniqueTest\Slack\TestCase;
 
 class OptionsTest extends TestCase
 {
-    private static $params;
+    private $params;
 
-    private static $token;
+    private $token;
 
-    public static function setUpBeforeClass(): void
+    protected function setUp(): void
     {
-        parent::setUpBeforeClass();
+        parent::setUp();
 
         $faker = \Faker\Factory::create();
 
         foreach ($faker->words as $word) {
-            self::$params[$faker->word] = $word;
+            $this->params[$faker->word] = $word;
         }
 
-        self::$token = $faker->uuid;
+        $this->token = $faker->uuid;
     }
 
-    public function test__construct()
+    public function testOf()
     {
-        $this->assertInstanceOf(Options::class, new Options(HttpMethod::get(), self::$params, self::$token));
-        $this->assertInstanceOf(Options::class, new Options(HttpMethod::head(), self::$params, self::$token));
-        $this->assertInstanceOf(Options::class, new Options(HttpMethod::post(), self::$params, self::$token));
-        $this->assertInstanceOf(Options::class, new Options(HttpMethod::put(), self::$params, self::$token));
-        $this->assertInstanceOf(Options::class, new Options(HttpMethod::delete(), self::$params, self::$token));
-        $this->assertInstanceOf(Options::class, new Options(HttpMethod::patch(), self::$params, self::$token));
+        $this->assertInstanceOf(Options::class, Options::of(HttpMethod::get(), $this->params, $this->token));
+        $this->assertInstanceOf(Options::class, Options::of(HttpMethod::head(), $this->params, $this->token));
+        $this->assertInstanceOf(Options::class, Options::of(HttpMethod::post(), $this->params, $this->token));
+        $this->assertInstanceOf(Options::class, Options::of(HttpMethod::put(), $this->params, $this->token));
+        $this->assertInstanceOf(Options::class, Options::of(HttpMethod::delete(), $this->params, $this->token));
+        $this->assertInstanceOf(Options::class, Options::of(HttpMethod::patch(), $this->params, $this->token));
     }
 
     public function testValue()
     {
-        $this->assertArrayHasKey('headers', (new Options(HttpMethod::get(), self::$params, self::$token))->value());
-        $this->assertArrayHasKey('headers', (new Options(HttpMethod::head(), self::$params, self::$token))->value());
-        $this->assertArrayHasKey('headers', (new Options(HttpMethod::post(), self::$params, self::$token))->value());
-        $this->assertArrayHasKey('headers', (new Options(HttpMethod::put(), self::$params, self::$token))->value());
-        $this->assertArrayHasKey('headers', (new Options(HttpMethod::delete(), self::$params, self::$token))->value());
-        $this->assertArrayHasKey('headers', (new Options(HttpMethod::patch(), self::$params, self::$token))->value());
-        foreach (self::$params as $key => $value) {
-            $this->assertArrayHasKey($key, (new Options(HttpMethod::post(), self::$params, self::$token))->value());
-            $this->assertArrayHasKey($key, (new Options(HttpMethod::put(), self::$params, self::$token))->value());
-            $this->assertArrayHasKey($key, (new Options(HttpMethod::delete(), self::$params, self::$token))->value());
-            $this->assertArrayHasKey($key, (new Options(HttpMethod::patch(), self::$params, self::$token))->value());
+        $this->assertArrayHasKey('headers', (Options::of(HttpMethod::get(), $this->params, $this->token))->value());
+        $this->assertArrayHasKey('headers', (Options::of(HttpMethod::head(), $this->params, $this->token))->value());
+        $this->assertArrayHasKey('headers', (Options::of(HttpMethod::post(), $this->params, $this->token))->value());
+        $this->assertArrayHasKey('headers', (Options::of(HttpMethod::put(), $this->params, $this->token))->value());
+        $this->assertArrayHasKey('headers', (Options::of(HttpMethod::delete(), $this->params, $this->token))->value());
+        $this->assertArrayHasKey('headers', (Options::of(HttpMethod::patch(), $this->params, $this->token))->value());
+        foreach ($this->params as $key => $value) {
+            $this->assertArrayHasKey($key, (Options::of(HttpMethod::post(), $this->params, $this->token))->value());
+            $this->assertArrayHasKey($key, (Options::of(HttpMethod::put(), $this->params, $this->token))->value());
+            $this->assertArrayHasKey($key, (Options::of(HttpMethod::delete(), $this->params, $this->token))->value());
+            $this->assertArrayHasKey($key, (Options::of(HttpMethod::patch(), $this->params, $this->token))->value());
         }
     }
 
     public function testEquals()
     {
-        $this->assertTrue((new Options(HttpMethod::get(), self::$params, self::$token))->equals(new Options(HttpMethod::get(), self::$params, self::$token)));
-        $this->assertTrue((new Options(HttpMethod::head(), self::$params, self::$token))->equals(new Options(HttpMethod::head(), self::$params, self::$token)));
-        $this->assertTrue((new Options(HttpMethod::post(), self::$params, self::$token))->equals(new Options(HttpMethod::post(), self::$params, self::$token)));
-        $this->assertTrue((new Options(HttpMethod::put(), self::$params, self::$token))->equals(new Options(HttpMethod::put(), self::$params, self::$token)));
-        $this->assertTrue((new Options(HttpMethod::delete(), self::$params, self::$token))->equals(new Options(HttpMethod::delete(), self::$params, self::$token)));
-        $this->assertTrue((new Options(HttpMethod::patch(), self::$params, self::$token))->equals(new Options(HttpMethod::patch(), self::$params, self::$token)));
+        $this->assertTrue((Options::of(HttpMethod::get(), $this->params, $this->token))->equals(Options::of(HttpMethod::get(), $this->params, $this->token)));
+        $this->assertTrue((Options::of(HttpMethod::head(), $this->params, $this->token))->equals(Options::of(HttpMethod::head(), $this->params, $this->token)));
+        $this->assertTrue((Options::of(HttpMethod::post(), $this->params, $this->token))->equals(Options::of(HttpMethod::post(), $this->params, $this->token)));
+        $this->assertTrue((Options::of(HttpMethod::put(), $this->params, $this->token))->equals(Options::of(HttpMethod::put(), $this->params, $this->token)));
+        $this->assertTrue((Options::of(HttpMethod::delete(), $this->params, $this->token))->equals(Options::of(HttpMethod::delete(), $this->params, $this->token)));
+        $this->assertTrue((Options::of(HttpMethod::patch(), $this->params, $this->token))->equals(Options::of(HttpMethod::patch(), $this->params, $this->token)));
     }
 
     public function testJsonSerialize()
     {
-        $this->assertArrayHasKey('headers', (new Options(HttpMethod::get(), self::$params, self::$token))->jsonSerialize());
-        $this->assertArrayHasKey('headers', (new Options(HttpMethod::head(), self::$params, self::$token))->jsonSerialize());
-        $this->assertArrayHasKey('headers', (new Options(HttpMethod::post(), self::$params, self::$token))->jsonSerialize());
-        $this->assertArrayHasKey('headers', (new Options(HttpMethod::put(), self::$params, self::$token))->jsonSerialize());
-        $this->assertArrayHasKey('headers', (new Options(HttpMethod::delete(), self::$params, self::$token))->jsonSerialize());
-        $this->assertArrayHasKey('headers', (new Options(HttpMethod::patch(), self::$params, self::$token))->jsonSerialize());
-        foreach (self::$params as $key => $value) {
-            $this->assertArrayHasKey($key, (new Options(HttpMethod::post(), self::$params, self::$token))->jsonSerialize());
-            $this->assertArrayHasKey($key, (new Options(HttpMethod::put(), self::$params, self::$token))->jsonSerialize());
-            $this->assertArrayHasKey($key, (new Options(HttpMethod::delete(), self::$params, self::$token))->jsonSerialize());
-            $this->assertArrayHasKey($key, (new Options(HttpMethod::patch(), self::$params, self::$token))->jsonSerialize());
+        $this->assertArrayHasKey('headers', (Options::of(HttpMethod::get(), $this->params, $this->token))->jsonSerialize());
+        $this->assertArrayHasKey('headers', (Options::of(HttpMethod::head(), $this->params, $this->token))->jsonSerialize());
+        $this->assertArrayHasKey('headers', (Options::of(HttpMethod::post(), $this->params, $this->token))->jsonSerialize());
+        $this->assertArrayHasKey('headers', (Options::of(HttpMethod::put(), $this->params, $this->token))->jsonSerialize());
+        $this->assertArrayHasKey('headers', (Options::of(HttpMethod::delete(), $this->params, $this->token))->jsonSerialize());
+        $this->assertArrayHasKey('headers', (Options::of(HttpMethod::patch(), $this->params, $this->token))->jsonSerialize());
+        foreach ($this->params as $key => $value) {
+            $this->assertArrayHasKey($key, (Options::of(HttpMethod::post(), $this->params, $this->token))->jsonSerialize());
+            $this->assertArrayHasKey($key, (Options::of(HttpMethod::put(), $this->params, $this->token))->jsonSerialize());
+            $this->assertArrayHasKey($key, (Options::of(HttpMethod::delete(), $this->params, $this->token))->jsonSerialize());
+            $this->assertArrayHasKey($key, (Options::of(HttpMethod::patch(), $this->params, $this->token))->jsonSerialize());
         }
     }
 
     public function test__toString()
     {
-        $this->assertEquals(new Options(HttpMethod::get(), self::$params, self::$token), json_encode((new Options(HttpMethod::get(), self::$params, self::$token))->value()));
-        $this->assertEquals(new Options(HttpMethod::head(), self::$params, self::$token), json_encode((new Options(HttpMethod::head(), self::$params, self::$token))->value()));
-        $this->assertEquals(new Options(HttpMethod::post(), self::$params, self::$token), json_encode((new Options(HttpMethod::post(), self::$params, self::$token))->value()));
-        $this->assertEquals(new Options(HttpMethod::put(), self::$params, self::$token), json_encode((new Options(HttpMethod::put(), self::$params, self::$token))->value()));
-        $this->assertEquals(new Options(HttpMethod::delete(), self::$params, self::$token), json_encode((new Options(HttpMethod::delete(), self::$params, self::$token))->value()));
-        $this->assertEquals(new Options(HttpMethod::patch(), self::$params, self::$token), json_encode((new Options(HttpMethod::patch(), self::$params, self::$token))->value()));
+        $this->assertEquals(Options::of(HttpMethod::get(), $this->params, $this->token), json_encode((Options::of(HttpMethod::get(), $this->params, $this->token))->value()));
+        $this->assertEquals(Options::of(HttpMethod::head(), $this->params, $this->token), json_encode((Options::of(HttpMethod::head(), $this->params, $this->token))->value()));
+        $this->assertEquals(Options::of(HttpMethod::post(), $this->params, $this->token), json_encode((Options::of(HttpMethod::post(), $this->params, $this->token))->value()));
+        $this->assertEquals(Options::of(HttpMethod::put(), $this->params, $this->token), json_encode((Options::of(HttpMethod::put(), $this->params, $this->token))->value()));
+        $this->assertEquals(Options::of(HttpMethod::delete(), $this->params, $this->token), json_encode((Options::of(HttpMethod::delete(), $this->params, $this->token))->value()));
+        $this->assertEquals(Options::of(HttpMethod::patch(), $this->params, $this->token), json_encode((Options::of(HttpMethod::patch(), $this->params, $this->token))->value()));
     }
 }
