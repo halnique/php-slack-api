@@ -15,7 +15,10 @@ class Client implements Contracts\Client
     {
         $this->client = $client;
 
-        $dotEnv = Dotenv::create(__DIR__ . '/../../');
+        $dotEnv = Dotenv::create([
+            __DIR__ . '/../../../../../',
+            __DIR__ . '/../../',
+        ]);
         $dotEnv->load();
     }
 
