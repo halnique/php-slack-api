@@ -9,7 +9,7 @@ trait WithAuthenticate
     {
         $token = getenv('SLACK_API_ACCESS_TOKEN');
 
-        if (!$token) {
+        if ($token === false) {
             throw new \RuntimeException('Require Slack Api Access Token to set env: SLACK_API_ACCESS_TOKEN');
         }
 

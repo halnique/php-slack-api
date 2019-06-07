@@ -22,7 +22,7 @@ class WithAuthenticateTest extends TestCase
      */
     public function testTokenException()
     {
-        putenv('SLACK_API_ACCESS_TOKEN=');
+        putenv('SLACK_API_ACCESS_TOKEN');
         /** @var WithAuthenticate $withAuthenticate */
         $withAuthenticate = $this->getMockForTrait(WithAuthenticate::class);
         $this->expectException(\RuntimeException::class);
