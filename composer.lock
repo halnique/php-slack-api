@@ -843,6 +843,7 @@
                 "faker",
                 "fixtures"
             ],
+            "abandoned": true,
             "time": "2019-12-12T13:22:17+00:00"
         },
         {
@@ -1444,24 +1445,24 @@
         },
         {
             "name": "phpunit/php-invoker",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-invoker.git",
-                "reference": "4a01883f660b10d4a19a14de5efd19b22eac2d93"
+                "reference": "9ee24c724374ba355385e98808da8b4343b28f67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-invoker/zipball/4a01883f660b10d4a19a14de5efd19b22eac2d93",
-                "reference": "4a01883f660b10d4a19a14de5efd19b22eac2d93",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-invoker/zipball/9ee24c724374ba355385e98808da8b4343b28f67",
+                "reference": "9ee24c724374ba355385e98808da8b4343b28f67",
                 "shasum": ""
             },
             "require": {
                 "ext-pcntl": "*",
-                "php": "^7.1"
+                "php": ">=7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.5"
+                "phpunit/phpunit": "^8.5"
             },
             "type": "library",
             "extra": {
@@ -1490,7 +1491,13 @@
             "keywords": [
                 "process"
             ],
-            "time": "2018-01-27T06:52:17+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-11-30T08:22:55+00:00"
         },
         {
             "name": "phpunit/php-text-template",
