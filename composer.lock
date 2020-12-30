@@ -848,16 +848,16 @@
         },
         {
             "name": "halnique/php-string",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/halnique/php-string.git",
-                "reference": "d5d95be807ea621611c19a571de6d2ead46e88c5"
+                "reference": "0f2c36038ab34b5551e6e30b64c0eed2e31e3e66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/halnique/php-string/zipball/d5d95be807ea621611c19a571de6d2ead46e88c5",
-                "reference": "d5d95be807ea621611c19a571de6d2ead46e88c5",
+                "url": "https://api.github.com/repos/halnique/php-string/zipball/0f2c36038ab34b5551e6e30b64c0eed2e31e3e66",
+                "reference": "0f2c36038ab34b5551e6e30b64c0eed2e31e3e66",
                 "shasum": ""
             },
             "require": {
@@ -865,7 +865,6 @@
             },
             "require-dev": {
                 "php-coveralls/php-coveralls": "^2.1",
-                "phpunit/php-invoker": "^2.0",
                 "phpunit/phpunit": "^7.5"
             },
             "type": "library",
@@ -885,7 +884,7 @@
                 }
             ],
             "description": "PHP string extensions.",
-            "time": "2019-05-04T10:50:55+00:00"
+            "time": "2020-12-29T23:37:10+00:00"
         },
         {
             "name": "myclabs/deep-copy",
